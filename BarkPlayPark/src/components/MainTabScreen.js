@@ -103,7 +103,7 @@ const MainTabScreen = () => (
           tabBarLabel: "Favorite Parks",
           tabBarColor: "#009387",
           tabBarIcon: ({ color }) => (
-            <Icon name="newspaper-outline" color={color} size={26} />
+            <Icon name="bookmarks-outline" color={color} size={26} />
           ),
         }}
       />
