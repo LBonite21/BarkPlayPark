@@ -16,7 +16,7 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function DrawerContent(props) {
-  const paperTheme = useTheme();
+//   const paperTheme = useTheme();
 
   return (
     <View style={{ flex: 1 }}>
