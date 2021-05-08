@@ -15,12 +15,8 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { AuthContext } from "../components/context";
-
-export function DrawerContent(props) {
+export default function DrawerContent(props) {
   const paperTheme = useTheme();
-
-  const { signOut, toggleTheme } = React.useContext(AuthContext);
 
   return (
     <View style={{ flex: 1 }}>
@@ -29,7 +25,7 @@ export function DrawerContent(props) {
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image
-                source={require("../../images/logo.png")}
+                source={require("./images/pfp.png")}
                 size={50}
               />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>

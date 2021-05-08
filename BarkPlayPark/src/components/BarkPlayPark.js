@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import MainTabScreen from "./MainTabScreen";
+import DrawerContent from './DrawerContent';
 
 
 const Drawer = createDrawerNavigator();
