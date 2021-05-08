@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
-import {
-  Text,
-  View,
-  Image,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator();
+
+const BarkPlayPark = () => {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+        <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default BarkPlayPark;
+
