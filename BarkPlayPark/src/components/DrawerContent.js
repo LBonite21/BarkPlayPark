@@ -13,39 +13,27 @@ import {
 } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function DrawerContent(props) {
-//   const paperTheme = useTheme();
+  //   const paperTheme = useTheme();
 
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
-          <View style={styles.userInfoSection}>
+          <View
+            style={{
+              borderBottomColor: "black",
+              borderBottomWidth: 1.5,
+              top: 67
+            }}
+          />
+          <View style={styles.drawerNavSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image
-                source={require("./images/pfp.png")}
-                size={50}
-              />
+              <Avatar.Image source={require("./images/pfp.png")} size={50} />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title style={styles.title}>Lemuel Bonite</Title>
-                <Caption style={styles.caption}>@Super_Lemon21</Caption>
-              </View>
-            </View>
-
-            <View style={styles.row}>
-              <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>
-                  8
-                </Paragraph>
-                <Caption style={styles.caption}>Following</Caption>
-              </View>
-              <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>
-                  100
-                </Paragraph>
-                <Caption style={styles.caption}>Followers</Caption>
+                <Title style={styles.title}>Bark Play Park</Title>
               </View>
             </View>
           </View>
@@ -63,7 +51,7 @@ export default function DrawerContent(props) {
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon
-                  name="newspaper-variant-outline"
+                  name="bookmarks-outline"
                   color={color}
                   size={size}
                 />
@@ -84,12 +72,13 @@ const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
   },
-  userInfoSection: {
+  drawerNavSection: {
     paddingLeft: 20,
+    marginTop: -10
   },
   title: {
     fontSize: 16,
-    marginTop: 3,
+    marginTop: 11,
     fontWeight: "bold",
   },
   caption: {
