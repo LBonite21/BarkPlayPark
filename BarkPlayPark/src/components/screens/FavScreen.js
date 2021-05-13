@@ -4,8 +4,10 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import FavoriteForm from '../FavoritesForm';
+
 import Icon from "react-native-vector-icons/Ionicons";
+
+import FavoriteForm from '../FavoritesForm';
 import { db } from '../config';
 
 const FavScreen = ({ navigation }) => {
@@ -56,7 +58,10 @@ const FavScreen = ({ navigation }) => {
             <h1>Favorites List</h1>
             <View>
                 <FavoriteForm {...({ addFavorite, id, favoriteObjects })} />
-                <div>
+
+
+
+                {/* <div>
                     <table>
                         <thead>
                             <tr>
@@ -79,7 +84,7 @@ const FavScreen = ({ navigation }) => {
                             }
                         </tbody>
                     </table>
-                </div>
+                </div> */}
             </View>
         </>
     );
