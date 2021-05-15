@@ -25,7 +25,7 @@ const FavScreen = ({ navigation }) => {
     }, [])
 
     const addFavorite = obj => {
-        if (id == '')
+        if (id == '') { //
             db.child('favorites').push(
                 obj,
                 err => {
@@ -34,6 +34,7 @@ const FavScreen = ({ navigation }) => {
                     }
                 }
             )
+        }
     }
 
     const onDelete = key => {
@@ -51,39 +52,37 @@ const FavScreen = ({ navigation }) => {
         }
     }
 
-    return(
+    return (
         <>
-            <h1>Favorites List</h1>
+            <Text style={{ fontSize: 30 }}>Favorites List</Text>
             <View>
                 <FavoriteForm {...({ addFavorite, id, favoriteObjects })} />
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Park Name</th>
-                                <th>Rating</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                Object.keys(favoriteObjects).map(id => {
-                                    return <tr key={id}>
-                                        <td> {favoriteObjects[id].parkName} </td>
-                                        <td> {favoriteObjects[id].rating} </td>
-                                        <td>
-                                            <Icon name='heart' color='#770000' onClick={() => { onDelete(id) }} />
-                                        </td>
-                                    </tr>
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                <View>
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Text style={{ flex: 1 }}>Park Name</Text>
+                        <Text style={{ flex: 2 }}>Rating</Text>
+                        <Text style={{ flex: 3 }}>Action</Text>
+                    </View>
+                    {
+                        Object.keys(favoriteObjects).map(id => {
+                            return (
+                                <View key={id}>
+                                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                                        <View style={{ flex: 1 }}> {favoriteObjects[id].parkName} </View>
+                                        <View style={{ flex: 2 }}> {favoriteObjects[id].rating} </View>
+                                        <View style={{ flex: 3 }}>
+                                            <Icon name='heart' color='#770000' onPress={() => { onDelete(id) }} /* Getting errors in console due to Icon being wrapped by View I believe *//>
+                                        </View>
+                                    </View>
+                                </View>
+                            )
+                        })
+                    }
+                </View>
             </View>
         </>
     );
-};
+}
 
 export default FavScreen;
 
