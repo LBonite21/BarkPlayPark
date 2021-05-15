@@ -4,8 +4,10 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import FavoriteForm from '../FavoritesForm';
+
 import Icon from "react-native-vector-icons/Ionicons";
+
+import FavoriteForm from '../FavoritesForm';
 import { db } from '../config';
 
 const FavScreen = ({ navigation }) => {
