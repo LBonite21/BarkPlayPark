@@ -75,7 +75,7 @@ const FavScreen = ({ navigation }) => {
                   />
                 </View>
               </View>
-            </View>;
+            </View>
           })}
         </View>
       </View>

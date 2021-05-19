@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Text, StyleSheet, View, Dimensions } from "react-native";
+import React, { Component } from "react";
+import { Text, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Callout } from "react-native-maps";
-import { Component } from "react";
+import RatingScreen from './RatingScreen';
 // import Geolocation from '@react-native-community/geolocation';
 
 class MapScreen extends Component {
@@ -63,6 +63,8 @@ class MapScreen extends Component {
       longitude: this.state.longitude,
     };
 
+    const { navigation } = this.props;
+
     return (
       <View style={styles.container}>
         <MapView
@@ -92,6 +94,13 @@ class MapScreen extends Component {
               <Callout>
                 <View>
                   <Text>{dogPark.name}</Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                        this.props.navigation.navigate("RatingScreen")
+                    }}
+                  >
+                      <Text>More Info!</Text>
+                  </TouchableOpacity>
                 </View>
               </Callout>
             </Marker>
