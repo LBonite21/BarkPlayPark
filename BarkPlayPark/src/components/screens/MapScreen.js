@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, View, Dimensions } from "react-native";
+import * as Location from "expo-location";
 import MapView, { Marker, Callout } from "react-native-maps";
+import { Component } from "react";
 // import Geolocation from '@react-native-community/geolocation';
 
 class MapScreen extends Component {
+ 
   constructor(props) {
     super(props);
 
@@ -13,6 +16,7 @@ class MapScreen extends Component {
       longitude: -111.90328146937225,
       coordinates: [],
       dogParks: [],
+      errMsg: "",
     };
   }
 
@@ -25,25 +29,21 @@ class MapScreen extends Component {
     this.getDogParks();
   }
 
-  getLocation() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      (error) => {
-        Alert.alert(error.message.toString());
-      },
-      {
-        showLocationDialog: true,
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 0,
-      }
-    );
-  }
+  getLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      this.setState({
+        errMsg: "Permission to access location was denied",
+      });
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    });
+  };
 
   getDogParks() {
     let API_KEY = `AIzaSyCst7jCRy3gYwYbxhoIlxgLT79CwHGpYZA`;
@@ -77,7 +77,7 @@ class MapScreen extends Component {
         >
           <Marker
             coordinate={myLocation}
-            //   image={require("../../images/myPin.png")}
+            //   image={require("../images/pfp.png")}
           />
 
           {this.state.dogParks.map((dogPark, index) => (
