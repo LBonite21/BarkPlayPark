@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 const FavoritesForm = (props) => {
     const initValues = {
@@ -26,16 +26,50 @@ const FavoritesForm = (props) => {
     return (
         <View>
             <View>
-                <TextInput placeholder='Park Name' name='parkName' defaultValue={values.parkName} onChangeText={handleInputChange} /*Changed value to defualt value to remove error about controlled and uncontrolled inputs*//> 
+                <TextInput
+                    style={styles.input}
+                    placeholder='Park Name'
+                    name='parkName'
+                    defaultValue={values.parkName}
+                    onChangeText={handleInputChange} /*Changed value to defualt value to remove error about controlled and uncontrolled inputs*/ />
             </View>
             <View>
                 <TextInput placeholder='Rating' name='rating' defaultValue={values.rating} onChangeText={handleInputChange} />
             </View>
-            <TouchableOpacity title='Submit' onPress={handleFormSubmit}>
-                <Text style={{fontSize: 15, textAlign: 'center', backgroundColor: 'lightgray', width: 170, borderRadius: 5, borderWidth: 1, borderColor: 'gray'}}>Add To Favorites</Text>
+            <TouchableOpacity
+                title='Submit'
+                onPress={handleFormSubmit}>
+                <Text style={styles.button}>Favorite!</Text>
             </TouchableOpacity>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        top: "50%"
+    },
+    input: {
+        height: 30,
+        fontSize: 23,
+        borderBottomWidth: 2,
+        borderColor: 'lightgray',
+        margin: 30
+    },
+    button: {
+        fontSize: 20,
+        padding: 15,
+        textAlign: 'center',
+        backgroundColor: 'white',
+        width: 170,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#7f0000'
+    },
+    center: {
+        justifyContent: 'center'
+    }
+})
 
 export default FavoritesForm;
