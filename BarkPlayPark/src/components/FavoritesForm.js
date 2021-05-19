@@ -29,7 +29,7 @@ const FavoritesForm = (props) => {
                 <TextInput placeholder='Park Name' name='parkName' defaultValue={values.parkName} onChangeText={handleInputChange} /*Changed value to defualt value to remove error about controlled and uncontrolled inputs*//> 
             </View>
             <View>
-                {/* <TextInput placeholder='Rating' name='rating' defaultValue={values.rating} onChangeText={handleInputChange} /> */}
+                <TextInput placeholder='Rating' name='rating' defaultValue={values.rating} onChangeText={handleInputChange} />
             </View>
             <TouchableOpacity title='Submit' onPress={handleFormSubmit}>
                 <Text style={{fontSize: 15, textAlign: 'center', backgroundColor: 'lightgray', width: 170, borderRadius: 5, borderWidth: 1, borderColor: 'gray'}}>Add To Favorites</Text>

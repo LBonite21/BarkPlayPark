@@ -16,7 +16,7 @@ class MapScreen extends Component {
       longitude: -111.90328146937225,
       coordinates: [],
       dogParks: [],
-      errMsg: "",
+      errMsg: ""
     };
   }
 
