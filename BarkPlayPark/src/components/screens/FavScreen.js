@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
-  Text,
-  StyleSheet,
-  View
+    Text,
+    StyleSheet,
+    View
 } from "react-native";
 import FavoriteForm from '../FavoritesForm';
 import Icon from "react-native-vector-icons/Ionicons";
@@ -25,7 +25,7 @@ const FavScreen = ({ navigation }) => {
     }, [])
 
     const addFavorite = obj => {
-        if (id == '') { //
+        if (id == '') {
             db.child('favorites').push(
                 obj,
                 err => {
@@ -45,7 +45,7 @@ const FavScreen = ({ navigation }) => {
                         console.log(err)
                     }
                     else {
-                        setId('') //removes from list realtime
+                        setId('')
                     }
                 }
             )
@@ -53,25 +53,33 @@ const FavScreen = ({ navigation }) => {
     }
 
     return (
-        <>
-            <Text style={{ fontSize: 30 }}>Favorites List</Text>
+        <View>
             <View>
-                <FavoriteForm {...({ addFavorite, id, favoriteObjects })} />
+                <Text style={styles.header}>Favorites List</Text>
+            </View>
+            <View>
+                <FavoriteForm {
+                    ...({
+                        addFavorite,
+                        id,
+                        favoriteObjects
+                    })}
+                />
                 <View>
-                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <View style={styles.columns}>
                         <Text style={{ flex: 1 }}>Park Name</Text>
-                        <Text style={{ flex: 2 }}>Rating</Text>
-                        <Text style={{ flex: 3 }}>Action</Text>
+                        {/* <Text style={{ flex: 2 }}>Rating</Text> */}
+                        <Text style={{ flex: 2 }}>Action</Text>
                     </View>
                     {
                         Object.keys(favoriteObjects).map(id => {
                             return (
                                 <View key={id}>
-                                    <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <View style={{ flex: 1 }}> {favoriteObjects[id].parkName} </View>
-                                        <View style={{ flex: 2 }}> {favoriteObjects[id].rating} </View>
-                                        <View style={{ flex: 3 }}>
-                                            <Icon name='heart' color='#770000' onPress={() => { onDelete(id) }} /* Getting errors in console due to Icon being wrapped by View I believe *//>
+                                    <View style={styles.columns}>
+                                        <Text style={{ flex: 1 }}>{favoriteObjects[id].parkName}</Text>
+                                        {/* <View style={{ flex: 2 }}> {favoriteObjects[id].rating}</View> */}
+                                        <View style={{ flex: 2 }}>
+                                            <Icon name='heart' color='#770000' onPress={() => { onDelete(id) }} />
                                         </View>
                                     </View>
                                 </View>
@@ -80,15 +88,10 @@ const FavScreen = ({ navigation }) => {
                     }
                 </View>
             </View>
-        </>
-    );
+        </View>
+    )
 }
 
 export default FavScreen;
 
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        top: "50%"
-    }
-});
+<Text style={styles.header}>Favorites List</Text>
