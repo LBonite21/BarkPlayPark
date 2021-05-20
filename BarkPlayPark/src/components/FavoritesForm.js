@@ -37,9 +37,10 @@ const FavoritesForm = (props) => {
                 {/* <TextInput placeholder='Rating' name='rating' defaultValue={values.rating} onChangeText={handleInputChange} /> */}
             </View>
             <TouchableOpacity
+                style={styles.center}
                 title='Submit'
                 onPress={handleFormSubmit}>
-                <Text style={styles.button}>Favorite!</Text>
+                <Text style={styles.button}>Add</Text>
             </TouchableOpacity>
         </View>
     );
@@ -59,16 +60,17 @@ const styles = StyleSheet.create({
     },
     button: {
         fontSize: 20,
-        padding: 15,
+        padding: 8,
         textAlign: 'center',
         backgroundColor: 'white',
-        width: 170,
+        width: 140,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#7f0000'
     },
     center: {
-        justifyContent: 'center'
+        display: 'flex',
+        alignSelf: 'center'
     }
 })
 
