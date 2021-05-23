@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
     Text,
     StyleSheet,
@@ -9,38 +9,32 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 
 import FavoriteForm from '../FavoritesForm';
-import { db } from '../config';
+import firebase from '../config';
 
-const FavScreen = ({ navigation }) => {
-    const [favoriteObjects, setFavoriteObjects] = useState({})
-    const [id, setId] = useState('');
-
-    useEffect(() => {
-        db.child('favorites').on('value', snapshot => {
-            if (snapshot.val() != null) {
-                setFavoriteObjects({
-                    ...snapshot.val()
-                })
-            } else {
-                setFavoriteObjects({});
-            }
-        })
-    }, [])
-
-    const addFavorite = (obj) => {
-        if (id == '') { //
-            db.child('favorites').push(
-                obj,
-                err => {
-                    if (err) {
-                        console.log(err)
-                    }
-                }
-            )
+export default class FavScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onDelete = this.onDelete.bind(this);
+        this.state = {
+            favoritesList: [],
         }
     }
 
-    const onDelete = (key) => {
+    componentDidMount() {
+        firebase.database().ref(`favorites`).on('value', snapshot => {
+            let favoritesList = [];
+            snapshot.forEach(snap => {
+                var key = snap.key;
+                var data = snap.val();
+                favoritesList.push({key: key, text: data.text});
+            });
+            this.setState({
+                favoritesList: favoritesList,
+            });
+        });
+    }
+
+    onDelete = (key) => {
         if (Alert.alert(
             'Remove',
             'Are you sure?',
@@ -51,55 +45,44 @@ const FavScreen = ({ navigation }) => {
                 },
                 {
                     text: 'Remove',
-                    onPress: () => db.child(`favorites/${key}`).remove(
-                        (err) => {
-                            if (err) {
-                                console.log(err)
-                            }
-                            else {
-                                setId('') //removes from list realtime
-                            }
-                        }
-                    )
+                    onPress: () => firebase.database().ref(`favorites`).child(key).remove()
                 }
             ]
-        )) {
-
-        }
+        )) {}
     }
-    return (
-        <>
-            <Text style={styles.header}>Favorites List</Text>
-            <View>
-                <FavoriteForm {...({ addFavorite, id, favoriteObjects })} />
+
+    render() {
+        return (
+            <>
+                <Text style={styles.header}>Favorites List</Text>
                 <View>
-                    <View style={styles.columns}>
-                        <Text style={{ flex: 1, marginLeft: 11, borderBottomWidth: 2 }}>Park Name</Text>
-                        {/* <Text style={{ flex: 2 }}>Rating</Text> */}
-                        <Text style={{ flex: 2 }}>Action</Text>
-                    </View>
-                    {
-                        Object.keys(favoriteObjects).map(id => {
-                            return (
-                                <View key={id}>
-                                    <View style={styles.columns}>
-                                        <Text style={styles.park}> {favoriteObjects[id].parkName} </Text>
-                                        {/* <View style={{ flex: 2 }}> {favoriteObjects[id].rating} </View> */}
-                                        <View style={styles.heart}>
-                                            <Icon name='heart' color='#770000' size={20} onPress={() => { onDelete(id) }} /* Getting errors in console due to Icon being wrapped by View I believe */ />
+                    <View>
+                        <View style={styles.columns}>
+                            <Text style={{ flex: 1, marginLeft: 11, borderBottomWidth: 2 }}>Park Name</Text>
+                            <Text style={{ flex: 2 }}>Action</Text>
+                        </View>
+                        {
+                            this.state.favoritesList.map(data => {
+                                console.log(data.key)
+                                return (
+                                    <View key={data.key}>
+                                        <View style={styles.columns}>
+                                            <Text style={styles.park}>{data.text}</Text>
+                                            <View style={styles.heart}>
+                                                <Icon name='heart' color='#770000' size={20} onPress={() => { this.onDelete(data.key) }}/>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </View>
                 </View>
-            </View>
-        </>
-    );
-}
+            </>
+        )
+    }
 
-export default FavScreen;
+}
 
 const styles = StyleSheet.create({
     container: {

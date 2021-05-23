@@ -12,8 +12,6 @@ const FavoritesForm = (props) => {
     const handleInputChange = e => {
         // const { name, value } = e
         setValues({
-            // ...values,
-            // [name]: value
             parkName: e
         })
     }

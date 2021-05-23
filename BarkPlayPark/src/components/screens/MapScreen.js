@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Text, StyleSheet, View, Dimensions } from "react-native";
+import { Text, StyleSheet, View, Dimensions, TextInput, TouchableOpacity, Keyboard, Button } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Callout } from "react-native-maps";
 import { Component } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
+import firebase from '../config';
+import { GooglePlacesAutoComplete } from 'react-native-google-places-autocomplete';
+
 // import Geolocation from '@react-native-community/geolocation';
 
 class MapScreen extends Component {
- 
+
   constructor(props) {
     super(props);
 
@@ -16,7 +20,10 @@ class MapScreen extends Component {
       longitude: -111.90328146937225,
       coordinates: [],
       dogParks: [],
-      errMsg: ""
+      errMsg: "",
+      messageText: null,
+      sendButton: false,
+      messages: []
     };
   }
 
@@ -57,6 +64,26 @@ class MapScreen extends Component {
       });
   }
 
+  searchLocation = async (text) => {
+
+  }
+
+  onSendPress() {
+    if (this.state.sendButton) {
+      firebase.database().ref('favorites').push({
+        text: this.state.messageText,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      }).then(() => {
+        this.setState({ messageText: null });
+        Keyboard.dismiss();
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+  }
+
   render() {
     let myLocation = {
       latitude: this.state.latitude,
@@ -65,6 +92,16 @@ class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
+        <View style={styles.inputWrapper}>
+          <TextInput placeholder="Search..." style={styles.input} onChangeText={messageText => this.setState({ messageText: messageText, sendButton: messageText.length > 0 })} />
+          <View style={styles.sendButton}>
+            <TouchableOpacity onPress={this.onSendPress.bind(this)}>
+              <Icon name='send' size={22} color='#7f0000'></Icon>
+            </TouchableOpacity>
+            <View style={styles.buttonStyle}>
+            </View>
+          </View>
+        </View>
         <MapView
           provider={MapView.PROVIDER_GOOGLE}
           style={styles.map}
@@ -77,7 +114,7 @@ class MapScreen extends Component {
         >
           <Marker
             coordinate={myLocation}
-            //   image={require("../images/pfp.png")}
+          //   image={require("../images/pfp.png")}
           />
 
           {this.state.dogParks.map((dogPark, index) => (
@@ -87,7 +124,7 @@ class MapScreen extends Component {
                 latitude: dogPark.geometry.location.lat,
                 longitude: dogPark.geometry.location.lng,
               }}
-              // image={require("../../images/pin.png")}
+            // image={require("../../images/pin.png")}
             >
               <Callout>
                 <View>
@@ -136,5 +173,32 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "OctinCollege-Bold",
     letterSpacing: 2,
+  },
+  inputWrapper: {
+    width: '85%',
+    position: 'absolute',
+    padding: 10,
+    top: 0,
+    left: 30,
+    zIndex: 100
+  },
+  input: {
+    height: 45,
+    paddingVertical: 10,
+    paddingRight: 50,
+    paddingLeft: 10,
+    marginTop: 12,
+    borderColor: 'gray',
+    borderWidth: 1.5,
+    borderRadius: 4,
+    borderColor: '#ccc',
+    backgroundColor: 'white'
+  },
+  sendButton: {
+    position: 'absolute',
+    top: 23.5,
+    right: 11,
+    opacity: 0.3,
+    padding: 9.5
   },
 });
