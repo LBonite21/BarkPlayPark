@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Button,
+  TouchableHighlight,
+} from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Callout } from "react-native-maps";
-import RatingScreen from './RatingScreen';
+import ReactDOM from "react-dom";
 // import Geolocation from '@react-native-community/geolocation';
 
 class MapScreen extends Component {
- 
   constructor(props) {
     super(props);
 
@@ -16,7 +23,7 @@ class MapScreen extends Component {
       longitude: -111.90328146937225,
       coordinates: [],
       dogParks: [],
-      errMsg: ""
+      errMsg: "",
     };
   }
 
@@ -57,13 +64,25 @@ class MapScreen extends Component {
       });
   }
 
+  ratingScreen() {
+    this.props.navigation.navigate("Rating");
+  }
+
   render() {
     let myLocation = {
       latitude: this.state.latitude,
       longitude: this.state.longitude,
     };
 
-    const { navigation } = this.props;
+    // const { navigation } = props;
+
+    // const RatingStack = createStackNavigator({
+    //     Rating: {
+    //         screen: RatingScreen
+    //     }
+    // });
+
+    // const AppContainer = createAppContainer(RatingStack);
 
     return (
       <View style={styles.container}>
@@ -77,13 +96,13 @@ class MapScreen extends Component {
             longitudeDelta: 0.0421,
           }}
         >
-          <Marker
+          <MapView.Marker
             coordinate={myLocation}
             //   image={require("../images/pfp.png")}
           />
 
           {this.state.dogParks.map((dogPark, index) => (
-            <Marker
+            <MapView.Marker
               key={index}
               coordinate={{
                 latitude: dogPark.geometry.location.lat,
@@ -91,25 +110,37 @@ class MapScreen extends Component {
               }}
               // image={require("../../images/pin.png")}
             >
-              <Callout>
+              <MapView.Callout>
+                {/* <RatingScreen /> */}
+                {/* <TouchableHighlight underlayColor="#dddddd"> */}
                 <View>
                   <Text>{dogPark.name}</Text>
-                  <TouchableOpacity
+                  <Button
+                    title="More Info!"
+                    onPressOut={() => {
+                      this.ratingScreen()
+                      console.log("Clicked!")
+                    }}
+                  />
+                  {/* <TouchableOpacity
                     onPress={() => {
-                        this.props.navigation.navigate("RatingScreen")
+                        props.navigation.navigate("Favorites");
                     }}
                   >
                       <Text>More Info!</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
-              </Callout>
-            </Marker>
+                {/* </TouchableHighlight> */}
+              </MapView.Callout>
+            </MapView.Marker>
           ))}
         </MapView>
       </View>
     );
   }
 }
+
+// ReactDOM.render(<MapScreen />, document.getElementById("root"));
 
 export default MapScreen;
 
