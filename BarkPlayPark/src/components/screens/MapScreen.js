@@ -11,6 +11,7 @@ import {
 import * as Location from "expo-location";
 import MapView, { Marker, Callout } from "react-native-maps";
 import ReactDOM from "react-dom";
+import RatingScreen from "./RatingScreen";
 // import Geolocation from '@react-native-community/geolocation';
 
 class MapScreen extends Component {
@@ -111,26 +112,13 @@ class MapScreen extends Component {
               // image={require("../../images/pin.png")}
             >
               <MapView.Callout>
-                {/* <RatingScreen /> */}
-                {/* <TouchableHighlight underlayColor="#dddddd"> */}
                 <View>
-                  <Text>{dogPark.name}</Text>
-                  <Button
-                    title="More Info!"
-                    onPressOut={() => {
-                      this.ratingScreen()
-                      console.log("Clicked!")
-                    }}
+                  <RatingScreen
+                    parkName={dogPark.name}
+                    rating={dogPark.rating}
+                    userRatingsTotal={dogPark.user_ratings_total}
                   />
-                  {/* <TouchableOpacity
-                    onPress={() => {
-                        props.navigation.navigate("Favorites");
-                    }}
-                  >
-                      <Text>More Info!</Text>
-                  </TouchableOpacity> */}
                 </View>
-                {/* </TouchableHighlight> */}
               </MapView.Callout>
             </MapView.Marker>
           ))}
