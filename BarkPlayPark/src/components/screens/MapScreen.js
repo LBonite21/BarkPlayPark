@@ -61,7 +61,7 @@ class MapScreen extends Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({ dogParks: json.results });
-        // console.log(json);
+        // console.log(json.results[1].photos[0].photo_reference);
       });
   }
 
@@ -99,29 +99,55 @@ class MapScreen extends Component {
         >
           <MapView.Marker
             coordinate={myLocation}
-            //   image={require("../images/pfp.png")}
+            image={require("../images/myPin.png")}
           />
 
-          {this.state.dogParks.map((dogPark, index) => (
-            <MapView.Marker
-              key={index}
-              coordinate={{
-                latitude: dogPark.geometry.location.lat,
-                longitude: dogPark.geometry.location.lng,
-              }}
-              // image={require("../../images/pin.png")}
-            >
-              <MapView.Callout>
-                <View>
-                  <RatingScreen
-                    parkName={dogPark.name}
-                    rating={dogPark.rating}
-                    userRatingsTotal={dogPark.user_ratings_total}
-                  />
-                </View>
-              </MapView.Callout>
-            </MapView.Marker>
-          ))}
+          {this.state.dogParks.map((dogPark, index) => {
+            let photos = dogPark.photos;
+            console.log(dogPark);
+            return photos === undefined ? (
+              <MapView.Marker
+                key={index}
+                coordinate={{
+                  latitude: dogPark.geometry.location.lat,
+                  longitude: dogPark.geometry.location.lng,
+                }}
+                image={require("../images/pin.png")}
+              >
+                <MapView.Callout>
+                  <View>
+                    <RatingScreen
+                      parkName={dogPark.name}
+                      rating={dogPark.rating}
+                      userRatingsTotal={dogPark.user_ratings_total}
+                      photo="ATtYBwK7UrhpDg-B8RiTMe12ZVLfeiXBe1HOeN0eNsUZjpGJxTUE_ihsYHxrMfrqbzSdrGFiyq9svmqXrLW1kPO2AhV8H9B6uPZsbDfIyfqQmgJtnlCswCD1OeZr3j7-GT5YfM4SUYTcQOt1Zqlz74wbXb6cOEmJ3SL2Y3mBzg3eFBr2dX_Q"
+                    />
+                  </View>
+                </MapView.Callout>
+              </MapView.Marker>
+            ) : (
+              <MapView.Marker
+                key={index}
+                coordinate={{
+                  latitude: dogPark.geometry.location.lat,
+                  longitude: dogPark.geometry.location.lng,
+                }}
+                image={require("../images/pin.png")}
+              >
+                <MapView.Callout>
+                  <View>
+                    <RatingScreen
+                      parkName={dogPark.name}
+                      rating={dogPark.rating}
+                      userRatingsTotal={dogPark.user_ratings_total}
+                      address={dogPark.formatted_address}
+                      photo={photos[0].photo_reference}
+                    />
+                  </View>
+                </MapView.Callout>
+              </MapView.Marker>
+            );
+          })}
         </MapView>
       </View>
     );

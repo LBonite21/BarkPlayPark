@@ -18,7 +18,7 @@ const MapStackScreen = ({ navigation }) => (
   <MapStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: "#7f0000",
+        backgroundColor: "#6079af",
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -36,12 +36,12 @@ const MapStackScreen = ({ navigation }) => (
             name="ios-menu"
             color="#fff"
             size={25}
-            backgroundColor="#7f0000"
+            backgroundColor="#6079af"
             onPress={() => navigation.openDrawer()}
           ></Icon.Button>
         ),
         headerRight: () => (
-          <Icon.Button name="filter" backgroundColor="#7f0000" />
+          <Icon.Button name="filter" backgroundColor="#6079af" />
         ),
       }}
     />
@@ -55,7 +55,7 @@ const MapStackScreen = ({ navigation }) => (
             name="ios-menu"
             color="#fff"
             size={25}
-            backgroundColor="#7f0000"
+            backgroundColor="#6079af"
             onPress={() => navigation.openDrawer()}
           ></Icon.Button>
         ),
@@ -68,7 +68,7 @@ const FavStackScreen = ({ navigation }) => (
   <FavStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: "#7f0000",
+        backgroundColor: "#6079af",
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -77,7 +77,7 @@ const FavStackScreen = ({ navigation }) => (
     }}
   >
     <FavStack.Screen
-      name="NBA News"
+      name="Favorite Parks"
       component={FavScreen}
       options={{
         title: " ",
@@ -85,7 +85,7 @@ const FavStackScreen = ({ navigation }) => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#7f0000"
+            backgroundColor="#6079af"
             onPress={() => navigation.openDrawer()}
           ></Icon.Button>
         ),
@@ -97,7 +97,7 @@ const FavStackScreen = ({ navigation }) => (
 const MainTabScreen = () => (
   <Tab.Navigator
     initialRouteName="Map"
-    activeColor="#7f0000"
+    activeColor="#c33d56"
     barStyle={{ backgroundColor: "#fff" }}
   >
     <Tab.Screen
@@ -105,7 +105,7 @@ const MainTabScreen = () => (
       component={MapStackScreen}
       options={{
         tabBarLabel: "Map",
-        tabBarColor: "#7f0000",
+        tabBarColor: "#6079af",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-map" color={color} size={26} />
         ),

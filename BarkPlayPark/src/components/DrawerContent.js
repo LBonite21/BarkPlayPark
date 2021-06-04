@@ -31,7 +31,7 @@ export default function DrawerContent(props) {
           />
           <View style={styles.drawerNavSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={require("./images/pfp.png")} size={50} />
+              <Avatar.Image source={require("./images/logo.png")} size={50} />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>Bark Play Park</Title>
               </View>
